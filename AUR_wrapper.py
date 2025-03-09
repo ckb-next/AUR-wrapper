@@ -19,8 +19,12 @@ import os
 import re
 import sys
 import subprocess
-from PyQt5.QtWidgets import QApplication, QMessageBox
-from PyQt5.QtCore import Qt
+try:
+    from PyQt6.QtWidgets import QApplication, QMessageBox
+    from PyQt6.QtCore import Qt
+except ModuleNotFoundError:
+    from PyQt5.QtWidgets import QApplication, QMessageBox
+    from PyQt5.QtCore import Qt
 
 # We need at least argv[0]
 if not sys.argv:
@@ -44,11 +48,11 @@ except Exception as e:
     # Initialise the UI
     app = QApplication(sys.argv)
     msg = QMessageBox()
-    msg.setIcon(QMessageBox.Critical)
-    msg.setTextFormat(Qt.RichText)
+    msg.setIcon(QMessageBox.Icon.Critical)
+    msg.setTextFormat(Qt.TextFormat.RichText)
     msg.setWindowTitle(f"Could not launch {pgmname}")
     msg.setText(f"Could not launch {pgmname}.")
-    msg.setStandardButtons(QMessageBox.Ok)
+    msg.setStandardButtons(QMessageBox.StandardButton.Ok)
 
     helpurl = "https://github.com/ckb-next/ckb-next/wiki/Linux-Installation#rebuilding-aur-packages"
     suggestion = f'<a href="{helpurl}">Rebuilding {pgmname}</a> and reinstalling from the AUR might correct this.'    
